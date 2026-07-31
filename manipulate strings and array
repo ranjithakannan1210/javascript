@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<textarea id="ParagraphInput" rows="5" cols="40"></textarea><br><br>
+<button onclick="analyseText()">Analyse</button>
+
+<pre id="output"></pre>
+
+<script>
+function analyseText() {
+    let text = document.getElementById("ParagraphInput").value;
+    let words = text.match(/\b\w+\b/g) || [];
+    let unique = [...new Set(words.map(w => w.toLowerCase()))];
+    let freq = {};
+
+    words.forEach(w => freq[w.toLowerCase()] = (freq[w.toLowerCase()] || 0) + 1);
+
+    let out = "";
+    for (let w in freq)
+        out += w + " : " + freq[w] + "\n";
+
+    document.getElementById("output").innerText =
+`Characters : ${text.length}
+Words : ${words.length}
+Sentences : ${(text.match(/[.!?]+/g) || []).length}
+Unique Words : ${unique.length}
+
+Frequency:
+${out}`;
+}
+</script>
+
+</body>
+</html>
